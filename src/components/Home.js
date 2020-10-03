@@ -52,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
+  minHeight: 0,
   drawerPaper: {
     width: drawerWidth,
   },
@@ -155,7 +156,6 @@ function Home(props) {
             {currentRoom}
           </Typography>
           <AuthContext.Consumer>{context => {
-            console.log(context);
             return (<SimpleMenu handleLogout={context.toggleAuth}/>)
           }}
           </AuthContext.Consumer>          

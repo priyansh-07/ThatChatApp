@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Home from './components/Home';
-import Login from './components/Login';
+import SignIn from './components/SignIn';
+import Signup from './components/Signup'
 import AuthContextProvider, { AuthContext } from './contexts/AuthContext';
+import { BrowserRouter as Router, Route }  from 'react-router-dom';
 
 function App() {
   return (
@@ -9,7 +11,11 @@ function App() {
         <AuthContext.Consumer>{context => {
           return (
             <div className='App'>
-              {context.isAuthenticated ? <Home /> : <Login />}
+              <Router>
+                <Route exact path='/' component={SignIn} />
+                <Route exact path='/signup' component={Signup} />
+                <Route exact path='/app' component={ context.isAuthenticated ? Home : SignIn} />
+              </Router>
             </div>
           );
         }}

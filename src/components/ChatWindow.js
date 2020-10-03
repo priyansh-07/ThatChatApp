@@ -63,7 +63,7 @@ export default function ChatWindow(props) {
 	});
 	return (
 		<div>
-			<div style={{height: '80vh'}}>
+			<div style={{height: '75vh'}}>
 				{messageComponents}
 			</div>
 			<form onSubmit={handleSubmit}>
