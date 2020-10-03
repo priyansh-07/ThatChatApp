@@ -6,7 +6,7 @@ export default class AuthContextProvider extends Component {
 	
 	state = {
 		isAuthenticated: true,
-		userId: '',
+		userId: 'testUserId',
 		test: 'testxyz'
 	}
 	

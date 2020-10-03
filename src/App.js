@@ -1,18 +1,20 @@
 import React from 'react';
+import Home from './components/Home';
+import Login from './components/Login';
 import AuthContextProvider, { AuthContext } from './contexts/AuthContext';
 
 function App() {
   return (
-    <div className="App">
       <AuthContextProvider>
         <AuthContext.Consumer>{context => {
           return (
-            <h1> {context.test} </h1>
+            <div className='App'>
+              {context.isAuthenticated ? <Home /> : <Login />}
+            </div>
           );
         }}
         </AuthContext.Consumer>
       </AuthContextProvider>  
-    </div>
   );
 }
 
