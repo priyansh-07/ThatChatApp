@@ -67,7 +67,7 @@ const customUseStyles = makeStyles({
   },
 })
 
-function SimpleMenu() {
+function SimpleMenu(props) {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
@@ -77,6 +77,11 @@ function SimpleMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogout = () => {
+    setAnchorEl(null);
+    props.handleLogout();
+  }
 
   return (
     <div>
@@ -92,7 +97,7 @@ function SimpleMenu() {
       >
         <MenuItem onClick={handleClose}>Profile</MenuItem>
         <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </div>
   );
@@ -149,7 +154,11 @@ function Home(props) {
           <Typography variant="h6" noWrap>
             {currentRoom}
           </Typography>
-          <SimpleMenu />
+          <AuthContext.Consumer>{context => {
+            console.log(context);
+            return (<SimpleMenu handleLogout={context.toggleAuth}/>)
+          }}
+          </AuthContext.Consumer>          
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">

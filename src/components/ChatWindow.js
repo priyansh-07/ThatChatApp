@@ -26,18 +26,18 @@ export default function ChatWindow(props) {
 	let test_messages = [
 		{
 			type: 'received',
-			sender: 'shit 1',
+			sender: 'user 1',
 			text: 'Hey!',
 		},
 		{
 			type: 'received',
-			sender: 'shit 2',
+			sender: 'user 2',
 			text: 'How are you?'
 		},
 		{
 			type: 'sent',
-			sender: 'shit 3',
-			text: 'fucked!'
+			sender: 'user 3',
+			text: '!'
 		},
 	]
 	const classes = useStyles();
