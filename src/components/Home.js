@@ -6,18 +6,25 @@ import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
+// import InboxIcon from '@material-ui/icons/MoveToInbox';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import MailIcon from '@material-ui/icons/Mail';
+// import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import ChatWindow from './ChatWindow';
 import AuthContextProvider, { AuthContext } from '../contexts/AuthContext';
+
+import WhatshotIcon from '@material-ui/icons/Whatshot';
+import BlurOnIcon from '@material-ui/icons/BlurOn';
+
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const drawerWidth = 240;
 
@@ -54,14 +61,53 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const customUseStyles = makeStyles({
+  root: {
+    justifyContent: 'space-between',
+  },
+})
+
+function SimpleMenu() {
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <div>
+      <Button style={{color: '#fff'}} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+        Open Menu
+      </Button>
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleClose}>Profile</MenuItem>
+        <MenuItem onClick={handleClose}>My account</MenuItem>
+        <MenuItem onClick={handleClose}>Logout</MenuItem>
+      </Menu>
+    </div>
+  );
+}
+
 function Home(props) {
   const test_rooms = ['room 1', 'room 2'];
 
   const { window } = props;
   const classes = useStyles();
+  const customClasses = customUseStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [rooms, setRooms] = useState(test_rooms)
+  const [currentRoom, setCurrentRoom] = useState('room 1')
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -73,17 +119,10 @@ function Home(props) {
       <Divider />
       <List>
         {rooms.map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+          <ListItem button key={text} onClick={ () => {
+            setCurrentRoom(text);
+          } }>
+            <ListItemIcon>{index % 2 === 0 ? <WhatshotIcon /> : <BlurOnIcon />}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
@@ -97,7 +136,7 @@ function Home(props) {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
+        <Toolbar className={customClasses.root}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -108,8 +147,9 @@ function Home(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Responsive drawer
+            {currentRoom}
           </Typography>
+          <SimpleMenu />
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
@@ -148,7 +188,7 @@ function Home(props) {
         <AuthContextProvider>
           <AuthContext.Consumer>{context => {
             return (
-              <ChatWindow userId={context.userId}/>
+              <ChatWindow userId={context.userId} currentRoom={currentRoom}/>
             );
           }}
           </AuthContext.Consumer>
