@@ -7,7 +7,7 @@ const messageStyle = {
 export default function ReceivedMessage(props) {
 	return (
 		<div style={messageStyle}>
-			{props.sender}: {props.text}
+			<span style={{color: props.textColor}} ><b>{props.sender}</b></span>: {props.text}
 		</div>
 	)
 }

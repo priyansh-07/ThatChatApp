@@ -63,12 +63,18 @@ export default function ChatWindow(props) {
 		db.collection(`/${props.currentRoom.toLowerCase()}`).add(msgObj)
 		setInputMessage('');
 	}
+	// TODO: Random colors for each text sender
+	// const rand = () => {
+	// 	return Math.round(Math.random() * 6);
+	// }
+	// const colors = ['#09FBD3', '#F5D300', '#FDC7D7', '#A5D8F3', '#FFDEF3',
+	//  				'#CE96FB', '#01FFC3'];
 
 	const messageComponents = messages.map((msg, index) => {
-		if (msg.type === 'sent')
-			return <SentMessage sender={msg.sender} text={msg.text} key={index} />
+		if (msg.sender === props.userId)
+			return <SentMessage sender={msg.sender} text={msg.text} key={index} textColor='#fff'/>
 		else
-			return <ReceivedMessage sender={msg.sender} text={msg.text} key={index} />
+			return <ReceivedMessage sender={msg.sender} text={msg.text} key={index} textColor='#00cfc1'/>
 	});
 	return (
 		<div>

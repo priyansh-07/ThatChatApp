@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
-// import PropTypes from 'prop-types';
+
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
-// import InboxIcon from '@material-ui/icons/MoveToInbox';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-// import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -20,11 +18,11 @@ import ChatWindow from './ChatWindow';
 import AuthContextProvider, { AuthContext } from '../contexts/AuthContext';
 
 import WhatshotIcon from '@material-ui/icons/Whatshot';
-import BlurOnIcon from '@material-ui/icons/BlurOn';
 
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import AccountTreeIcon from '@material-ui/icons/AccountTree';
 
 import { db, fbauth } from '../config/firebase';
 
@@ -143,7 +141,7 @@ function Home(props) {
             setCurrentRoom(text);
             localStorage.setItem('localRoom', text)
           } }>
-            <ListItemIcon>{index % 2 === 0 ? <WhatshotIcon /> : <BlurOnIcon />}</ListItemIcon>
+            <ListItemIcon>{index % 2 === 0 ? <WhatshotIcon /> : <AccountTreeIcon />}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
@@ -167,8 +165,8 @@ function Home(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            {currentRoom}
+          <Typography style={{color: '#fff'}} variant="h6" noWrap>
+            <b>{currentRoom}</b>
           </Typography>
           <AuthContext.Consumer>{context => {
             return (<SimpleMenu handleLogout={context.toggleAuth} displayName={displayName}/>)
