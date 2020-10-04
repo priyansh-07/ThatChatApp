@@ -57,6 +57,8 @@ export default function SignIn(props) {
       .then(user => {
         props.toggleAuth();
       })
+      .catch(err => alert(err.code))
+
   }
   return (
     <Container component="main" maxWidth="xs">

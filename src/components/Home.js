@@ -18,6 +18,7 @@ import ChatWindow from './ChatWindow';
 import AuthContextProvider, { AuthContext } from '../contexts/AuthContext';
 
 import WhatshotIcon from '@material-ui/icons/Whatshot';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
@@ -87,8 +88,15 @@ function SimpleMenu(props) {
 
   return (
     <div>
-      <Button style={{color: '#fff'}} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-        {props.displayName}
+      <Button
+        variant='outlined'
+        color='primary'
+        style={{ color: '#fff' }} 
+        aria-controls="simple-menu"
+        aria-haspopup="true"
+        onClick={handleClick}>
+          <AccountCircleIcon style={{marginRight: '0.5em'}} />
+          {props.displayName}
       </Button>
       <Menu
         id="simple-menu"
@@ -117,9 +125,9 @@ function Home(props) {
 
   useEffect(() => {
     db.collection('rooms')
-        .onSnapshot( querySnapshot => {
-          setRooms(querySnapshot.docs.map( doc => doc.data().roomName ))
-        })
+      .onSnapshot(querySnapshot => {
+        setRooms(querySnapshot.docs.map(doc => doc.data().roomName))
+      })
   }, [])
 
   useEffect(() => {
@@ -137,10 +145,10 @@ function Home(props) {
       <Divider />
       <List>
         {rooms.map((text, index) => (
-          <ListItem button key={text} onClick={ () => {
+          <ListItem button key={text} onClick={() => {
             setCurrentRoom(text);
             localStorage.setItem('localRoom', text)
-          } }>
+          }}>
             <ListItemIcon>{index % 2 === 0 ? <WhatshotIcon /> : <AccountTreeIcon />}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
@@ -165,13 +173,13 @@ function Home(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography style={{color: '#fff'}} variant="h6" noWrap>
+          <Typography style={{ color: '#fff' }} variant="h6" noWrap>
             <b>{currentRoom}</b>
           </Typography>
           <AuthContext.Consumer>{context => {
-            return (<SimpleMenu handleLogout={context.toggleAuth} displayName={displayName}/>)
+            return (<SimpleMenu handleLogout={context.toggleAuth} displayName={displayName} />)
           }}
-          </AuthContext.Consumer>          
+          </AuthContext.Consumer>
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
@@ -210,7 +218,7 @@ function Home(props) {
         <AuthContextProvider>
           <AuthContext.Consumer>{context => {
             return (
-              <ChatWindow userId={displayName} currentRoom={currentRoom}/>
+              <ChatWindow userId={displayName} currentRoom={currentRoom} />
             );
           }}
           </AuthContext.Consumer>
