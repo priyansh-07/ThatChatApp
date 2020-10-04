@@ -6,6 +6,8 @@ import { FormControl, InputLabel, OutlinedInput, InputAdornment } from '@materia
 import ReceivedMessage from './ReceivedMessage'
 import SentMessage from './SentMessage'
 
+import { db } from '../config/firebase';
+
 const useStyles = makeStyles((theme) => ({
 	root: {
 	  display: 'flex',
@@ -23,35 +25,30 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 export default function ChatWindow(props) {
-	let test_messages = [
-		{
-			type: 'received',
-			sender: 'user 1',
-			text: 'Hey!',
-		},
-		{
-			type: 'received',
-			sender: 'user 2',
-			text: 'How are you?'
-		},
-		{
-			type: 'sent',
-			sender: 'user 3',
-			text: '!'
-		},
-	]
 	const classes = useStyles();
 	const [inputMessage, setInputMessage] = useState('');
-	const [messages, setMessages] = useState(test_messages)
+	const [messages, setMessages] = useState([])
+
+	useEffect(() => {
+		const temp_msgs = [];
+		db.collection('/trash')
+			.orderBy('createdAt')
+			.onSnapshot( qs => {
+				setMessages(qs.docs.map( doc => ({
+					sender: doc.data().sender,
+					text: doc.data().message,
+				})))
+			})
+	}, []);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		let msgObj = {
+			createdAt: new Date().toISOString(),
 			sender: props.userId,
-			type: 'sent',
-			text: inputMessage
+			message: inputMessage,
 		}
-		setMessages([...messages, msgObj])
+		db.collection('/trash').add(msgObj)
 		setInputMessage('');
 	}
 
