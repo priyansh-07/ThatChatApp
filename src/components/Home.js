@@ -26,7 +26,7 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import { db } from '../config/firebase';
+import { db, fbauth } from '../config/firebase';
 
 const drawerWidth = 240;
 
@@ -83,13 +83,14 @@ function SimpleMenu(props) {
 
   const handleLogout = () => {
     setAnchorEl(null);
+    fbauth.signOut();
     props.handleLogout();
   }
 
   return (
     <div>
       <Button style={{color: '#fff'}} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-        Open Menu
+        {props.displayName}
       </Button>
       <Menu
         id="simple-menu"
@@ -114,6 +115,7 @@ function Home(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [rooms, setRooms] = useState([])
   const [currentRoom, setCurrentRoom] = useState(localStorage.getItem('localRoom'))
+  const [displayName, setDisplayName] = useState('');
 
   useEffect(() => {
     db.collection('rooms')
@@ -121,6 +123,11 @@ function Home(props) {
           setRooms(querySnapshot.docs.map( doc => doc.data().roomName ))
         })
   }, [])
+
+  useEffect(() => {
+    if (fbauth.currentUser !== null)
+      setDisplayName(fbauth.currentUser.displayName);
+  }, [fbauth.currentUser]);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -164,7 +171,7 @@ function Home(props) {
             {currentRoom}
           </Typography>
           <AuthContext.Consumer>{context => {
-            return (<SimpleMenu handleLogout={context.toggleAuth}/>)
+            return (<SimpleMenu handleLogout={context.toggleAuth} displayName={displayName}/>)
           }}
           </AuthContext.Consumer>          
         </Toolbar>
