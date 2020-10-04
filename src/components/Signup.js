@@ -19,7 +19,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        That Chat App
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -55,7 +55,6 @@ export default function SignUp(props) {
 
   const handleSignUp = (e) => {
     e.preventDefault();
-    console.log(displayName, email, password);
     fbauth.createUserWithEmailAndPassword(email, password)
       .then( userCredentials => {
         return userCredentials.user.updateProfile({displayName: displayName})
@@ -137,7 +136,7 @@ export default function SignUp(props) {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>

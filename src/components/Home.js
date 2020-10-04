@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(0),
   },
 }));
 
@@ -212,7 +212,7 @@ function Home(props) {
         <AuthContextProvider>
           <AuthContext.Consumer>{context => {
             return (
-              <ChatWindow userId={context.userId} currentRoom={currentRoom}/>
+              <ChatWindow userId={displayName} currentRoom={currentRoom}/>
             );
           }}
           </AuthContext.Consumer>

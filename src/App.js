@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Home from './components/Home';
 import SignIn from './components/SignIn';
 import Signup from './components/Signup'
@@ -10,6 +10,10 @@ function App() {
     localStorage.setItem('localRoom', 'General');
   // console.log(localStorage.getItem('localRoom'));
 
+  // useEffect(() => {
+  //   let displayMsg = 'This App is still under development, If you find any bugs or have a suggestion, feel free to drop an email at priyanshjain@acm.org.'
+  //   alert(displayMsg);
+  // }, [])
   return (
     <AuthContextProvider>
       <AuthContext.Consumer>{context => {

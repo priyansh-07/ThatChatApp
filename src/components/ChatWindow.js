@@ -22,6 +22,14 @@ const useStyles = makeStyles((theme) => ({
 	textField: {
 	  width: '25ch',
 	},
+	content: {
+		marginTop: theme.spacing(2),
+		marginLeft: theme.spacing(2),
+		marginBottom: theme.spacing(1),
+	},
+	chatContainer: {
+		marginRight: theme.spacing(2),
+	}
   }));
 
 export default function ChatWindow(props) {
@@ -59,10 +67,10 @@ export default function ChatWindow(props) {
 	});
 	return (
 		<div>
-			<div style={{height: '75vh'}}>
+			<div style={{height: '80vh', overflow: 'auto'}} className={classes.content}>
 				{messageComponents}
 			</div>
-			<form onSubmit={handleSubmit}>
+			<form onSubmit={handleSubmit} className={classes.chatContainer}>
 				<FormControl fullWidth className={classes.margin} variant="outlined">
 					<InputLabel htmlFor="outlined-adornment-amount">Message</InputLabel>
 					<OutlinedInput
