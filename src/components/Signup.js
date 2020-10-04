@@ -55,7 +55,7 @@ export default function SignUp(props) {
 
   const handleSignUp = (e) => {
     e.preventDefault();
-    fbauth.createUserWithEmailAndPassword(email, password)
+    fbauth.createUserWithEmailAndPassword(email.trim(), password)
       .then( userCredentials => {
         return userCredentials.user.updateProfile({displayName: displayName})
       })

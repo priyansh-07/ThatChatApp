@@ -4,21 +4,19 @@ import SignIn from './components/SignIn';
 import Signup from './components/Signup'
 import AuthContextProvider, { AuthContext } from './contexts/AuthContext';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import SimpleModal from './components/InstructionModal';
 
 function App() {
   if (localStorage.getItem('localRoom') === null)
     localStorage.setItem('localRoom', 'General');
   // console.log(localStorage.getItem('localRoom'));
 
-  // useEffect(() => {
-  //   let displayMsg = 'This App is still under development, If you find any bugs or have a suggestion, feel free to drop an email at priyanshjain@acm.org.'
-  //   alert(displayMsg);
-  // }, [])
   return (
     <AuthContextProvider>
       <AuthContext.Consumer>{context => {
         return (
           <div className='App'>
+            <SimpleModal />
             <Router>
               <Route exact path='/signup' component={Signup} />
               <Route exact path='/'

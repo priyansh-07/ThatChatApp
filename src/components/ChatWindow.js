@@ -23,6 +23,11 @@ const useStyles = makeStyles((theme) => ({
 	  width: '25ch',
 	},
 	content: {
+		height: '80vh', 
+		[theme.breakpoints.down('xs')]: {
+			height: '80vh',
+		},
+		overflow: 'auto',
 		marginTop: theme.spacing(2),
 		marginLeft: theme.spacing(2),
 		marginBottom: theme.spacing(1),
@@ -67,7 +72,7 @@ export default function ChatWindow(props) {
 	});
 	return (
 		<div>
-			<div style={{height: '80vh', overflow: 'auto'}} className={classes.content}>
+			<div className={classes.content}>
 				{messageComponents}
 			</div>
 			<form onSubmit={handleSubmit} className={classes.chatContainer}>

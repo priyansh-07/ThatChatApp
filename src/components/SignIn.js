@@ -56,7 +56,7 @@ export default function SignIn(props) {
   const handleSignIn = (e) => {
     e.preventDefault();
     console.log(email, password)
-    fbauth.signInWithEmailAndPassword(email, password)
+    fbauth.signInWithEmailAndPassword(email.trim(), password)
       .then(user => {
         props.toggleAuth();
       })
