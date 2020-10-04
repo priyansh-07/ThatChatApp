@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Home from './components/Home';
 import SignIn from './components/SignIn';
 import Signup from './components/Signup'
@@ -6,6 +6,9 @@ import AuthContextProvider, { AuthContext } from './contexts/AuthContext';
 import { BrowserRouter as Router, Route }  from 'react-router-dom';
 
 function App() {
+  if (localStorage.getItem('localRoom') === null)
+    localStorage.setItem('localRoom', 'General');
+  // console.log(localStorage.getItem('localRoom'));
   return (
       <AuthContextProvider>
         <AuthContext.Consumer>{context => {

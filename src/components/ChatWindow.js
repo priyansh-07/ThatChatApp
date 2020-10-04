@@ -30,8 +30,7 @@ export default function ChatWindow(props) {
 	const [messages, setMessages] = useState([])
 
 	useEffect(() => {
-		const temp_msgs = [];
-		db.collection('/trash')
+		db.collection(`/${props.currentRoom.toLowerCase()}`)
 			.orderBy('createdAt')
 			.onSnapshot( qs => {
 				setMessages(qs.docs.map( doc => ({
@@ -39,7 +38,7 @@ export default function ChatWindow(props) {
 					text: doc.data().message,
 				})))
 			})
-	}, []);
+	}, [props.currentRoom]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -48,7 +47,7 @@ export default function ChatWindow(props) {
 			sender: props.userId,
 			message: inputMessage,
 		}
-		db.collection('/trash').add(msgObj)
+		db.collection(`/${props.currentRoom.toLowerCase()}`).add(msgObj)
 		setInputMessage('');
 	}
 

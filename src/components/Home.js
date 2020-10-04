@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -25,6 +25,8 @@ import BlurOnIcon from '@material-ui/icons/BlurOn';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+
+import { db } from '../config/firebase';
 
 const drawerWidth = 240;
 
@@ -105,15 +107,20 @@ function SimpleMenu(props) {
 }
 
 function Home(props) {
-  const test_rooms = ['room 1', 'room 2'];
-
   const { window } = props;
   const classes = useStyles();
   const customClasses = customUseStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [rooms, setRooms] = useState(test_rooms)
-  const [currentRoom, setCurrentRoom] = useState('room 1')
+  const [rooms, setRooms] = useState([])
+  const [currentRoom, setCurrentRoom] = useState(localStorage.getItem('localRoom'))
+
+  useEffect(() => {
+    db.collection('rooms')
+        .onSnapshot( querySnapshot => {
+          setRooms(querySnapshot.docs.map( doc => doc.data().roomName ))
+        })
+  }, [])
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -127,6 +134,7 @@ function Home(props) {
         {rooms.map((text, index) => (
           <ListItem button key={text} onClick={ () => {
             setCurrentRoom(text);
+            localStorage.setItem('localRoom', text)
           } }>
             <ListItemIcon>{index % 2 === 0 ? <WhatshotIcon /> : <BlurOnIcon />}</ListItemIcon>
             <ListItemText primary={text} />
