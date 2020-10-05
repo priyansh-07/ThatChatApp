@@ -32,8 +32,15 @@ const useStyles = makeStyles((theme) => ({
 		marginLeft: theme.spacing(2),
 		marginBottom: theme.spacing(1),
 	},
-	chatContainer: {
+	messageInput: {
+		position: 'fixed',
+		bottom: 0,
+		right: 0,
+		left: 0,
 		marginRight: theme.spacing(2),
+		[theme.breakpoints.up('sm')]: {
+			marginLeft: '240px',
+		},
 	}
   }));
 
@@ -81,7 +88,7 @@ export default function ChatWindow(props) {
 			<div className={classes.content}>
 				{messageComponents}
 			</div>
-			<form onSubmit={handleSubmit} className={classes.chatContainer}>
+			<form onSubmit={handleSubmit} className={classes.messageInput}>
 				<FormControl fullWidth className={classes.margin} variant="outlined">
 					<InputLabel htmlFor="outlined-adornment-amount">Message</InputLabel>
 					<OutlinedInput
