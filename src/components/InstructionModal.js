@@ -57,18 +57,18 @@ export default function SimpleModal() {
 		<div style={modalStyle} className={classes.paper}>
 			<h2 id="simple-modal-title">Before you proceed!</h2>
 			<ul id="simple-modal-description">
-				<li>This App is still under development, If you find any bugs or have a suggestion, feel free to drop an email at <br />
+				<li>This is a simple app where you can talk to different people in different chat rooms. Nothing Fancy! But hey! I'm learning xD!</li>
+				<li>The App is still under development, so if you find any bugs or have a suggestion, feel free to drop an email at <br />
 	priyanshjain@acm.org.
 				</li>
-				<li>If you want to create an account just click on 'Don't have an account? Sign Up' but make sure you're using throw away
-	id and password.
+				<li>If you want to create an account use fake id and password.
 				</li>
-				<li>Otherwise login with the following credentials<br />
+				<li>Otherwise login with the following credentials:<br />
 					<b>email: test@example.com</b><br />
 					<b>password: test123456</b>
 				</li>
 				<li>
-					In case it breaks Please do let me know it'll help me recreate and debug the issue more easily
+					In case it breaks Please do let me know, it'll be easier for me to reproduce and debug the issue.
 				</li>
 			</ul>
 			Thank you for testing it out!<br />

@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 	content: {
 		height: '80vh', 
 		[theme.breakpoints.down('xs')]: {
-			height: '80vh',
+			height: '78vh',
 		},
 		overflow: 'auto',
 		marginTop: theme.spacing(2),

@@ -61,6 +61,38 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(0),
   },
+  menuIcon: {
+    color: '#fff',
+  },
+  drawerHeader: {
+    padding: '2em',
+    paddingBottom: '1em',
+  },
+  drawerDisplayName: {
+    textTransform: 'capitalize',
+    fontSize: '40px',
+    fontFamily: 'Poiret One, cursive',
+  },
+  drawerEmail: {
+    fontFamily: 'Poiret One, cursive',
+    fontSize: '1vw',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '4vw',
+    },
+  },
+  drawerSectionHeader: {
+    fontWeight: 'bold',
+    fontSize: '1.5em',
+    paddingLeft: '1em',
+    paddingTop: '1em',
+    fontFamily: 'Poiret One, cursive',
+  },
+  appBarTitle: {
+    fontFamily: 'Poiret One, cursive',
+    color: '#fff',
+    fontWeight: 'bolder',
+    fontSize: '2em',
+  }
 }));
 
 const customUseStyles = makeStyles({
@@ -122,6 +154,7 @@ function Home(props) {
   const [rooms, setRooms] = useState([])
   const [currentRoom, setCurrentRoom] = useState(localStorage.getItem('localRoom'))
   const [displayName, setDisplayName] = useState('');
+  const [currentEmail, setCurrentEmail] = useState('');
 
   useEffect(() => {
     db.collection('rooms')
@@ -131,8 +164,10 @@ function Home(props) {
   }, [])
 
   useEffect(() => {
-    if (fbauth.currentUser !== null)
+    if (fbauth.currentUser !== null) {
       setDisplayName(fbauth.currentUser.displayName);
+      setCurrentEmail(fbauth.currentUser.email);
+    }
   }, [fbauth.currentUser]);
 
   const handleDrawerToggle = () => {
@@ -141,13 +176,21 @@ function Home(props) {
 
   const drawer = (
     <div>
-      <div className={classes.toolbar} />
+      <div className={classes.drawerHeader}>
+        <span className={classes.drawerDisplayName}>{displayName}</span>
+        <span className={classes.drawerEmail}> {currentEmail} </span>
+      </div>
       <Divider />
+      <div className={classes.drawerSectionHeader}>
+        <span>Rooms</span>
+      </div>
       <List>
         {rooms.map((text, index) => (
           <ListItem button key={text} onClick={() => {
             setCurrentRoom(text);
-            localStorage.setItem('localRoom', text)
+            localStorage.setItem('localRoom', text);
+            if (mobileOpen)
+              handleDrawerToggle();
           }}>
             <ListItemIcon>{index % 2 === 0 ? <WhatshotIcon /> : <AccountTreeIcon />}</ListItemIcon>
             <ListItemText primary={text} />
@@ -171,10 +214,10 @@ function Home(props) {
             onClick={handleDrawerToggle}
             className={classes.menuButton}
           >
-            <MenuIcon />
+            <MenuIcon className={classes.menuIcon} />
           </IconButton>
-          <Typography style={{ color: '#fff' }} variant="h6" noWrap>
-            <b>{currentRoom}</b>
+          <Typography className={classes.appBarTitle} variant="h6" noWrap>
+            {currentRoom}
           </Typography>
           <AuthContext.Consumer>{context => {
             return (<SimpleMenu handleLogout={context.toggleAuth} displayName={displayName} />)
