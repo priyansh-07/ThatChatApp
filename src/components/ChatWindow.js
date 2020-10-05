@@ -23,11 +23,8 @@ const useStyles = makeStyles((theme) => ({
 	  width: '25ch',
 	},
 	content: {
-		height: '80vh', 
-		[theme.breakpoints.down('xs')]: {
-			height: '78vh',
-		},
-		overflow: 'auto',
+		height: '78vh',
+		overflow: 'scroll',
 		marginTop: theme.spacing(2),
 		marginLeft: theme.spacing(2),
 		marginBottom: theme.spacing(1),

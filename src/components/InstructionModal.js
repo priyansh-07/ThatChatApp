@@ -57,7 +57,7 @@ export default function SimpleModal() {
 		<div style={modalStyle} className={classes.paper}>
 			<h2 id="simple-modal-title">Before you proceed!</h2>
 			<ul id="simple-modal-description">
-				<li>This is a simple app where you can talk to different people in different chat rooms. Nothing Fancy! But hey! I'm learning xD!</li>
+				<li>This is a simple app where you can talk to different people in different chat rooms "publicly". Nothing Fancy! But hey! I'm learning xD!</li>
 				<li>The App is still under development, so if you find any bugs or have a suggestion, feel free to drop an email at <br />
 	priyanshjain@acm.org.
 				</li>
