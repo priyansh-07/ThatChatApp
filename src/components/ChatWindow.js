@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles';
 import { FormControl, InputLabel, OutlinedInput, InputAdornment } from '@material-ui/core';
@@ -51,7 +51,14 @@ const useStyles = makeStyles((theme) => ({
 export default function ChatWindow(props) {
 	const classes = useStyles();
 	const [inputMessage, setInputMessage] = useState('');
-	const [messages, setMessages] = useState([])
+	const [messages, setMessages] = useState([]);
+	const messagesEndRef = useRef(null);
+
+	const scrollToBottom = () => {
+		messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
+	}
+
+	useEffect(scrollToBottom);
 
 	useEffect(() => {
 		db.collection(`/${props.currentRoom.toLowerCase()}`)
@@ -81,25 +88,46 @@ export default function ChatWindow(props) {
 	// const colors = ['#09FBD3', '#F5D300', '#FDC7D7', '#A5D8F3', '#FFDEF3',
 	//  				'#CE96FB', '#01FFC3'];
 
-	const messageComponents = messages.map((msg, index) => {
-		if (msg.sender === props.userId)
-			return (
-				<div className={classes.messageContainer} key={index}>
-					<SentMessage sender={msg.sender} text={msg.text} />
-					<br />
-				</div>
-			)
-		else
-			return (
-				<div key={index}>
-					<ReceivedMessage sender={msg.sender} text={msg.text} />
-					<br />
-				</div>
-			)
-	});
+	const messageComponents = (
+		<div>
+			{messages.map((msg, index) => {
+				if (msg.sender === props.userId)
+					return (
+						<div className={classes.messageContainer} key={index}>
+							<SentMessage sender={msg.sender} text={msg.text} />
+							<br />
+						</div>
+					)
+				else
+					return (
+						<div key={index}>
+							<ReceivedMessage sender={msg.sender} text={msg.text} />
+							<br />
+						</div>
+					)
+			})}
+			<div ref={messagesEndRef} />
+		</div>
+	)
+	// const messageComponents = messages.map((msg, index) => {
+	// 	if (msg.sender === props.userId)
+	// 		return (
+	// 			<div className={classes.messageContainer} key={index}>
+	// 				<SentMessage sender={msg.sender} text={msg.text} />
+	// 				<br />
+	// 			</div>
+	// 		)
+	// 	else
+	// 		return (
+	// 			<div key={index}>
+	// 				<ReceivedMessage sender={msg.sender} text={msg.text} />
+	// 				<br />
+	// 			</div>
+	// 		)
+	// });
 	return (
 		<div>
-			<div className={classes.content} id='message-container'>
+			<div className={classes.content}>
 				{messageComponents}
 			</div>
 			<form onSubmit={handleSubmit} className={classes.messageInput}>
