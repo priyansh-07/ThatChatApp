@@ -15,14 +15,25 @@ import { fbauth } from '../config/firebase';
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        That Chat App
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
+    <div>
+      <Typography variant="body2" color="textSecondary" align="center">
+        {'Copyright © '}
+        <Link color="inherit" href="https://material-ui.com/">
+          That Chat App
+        </Link>{' '}
+        {new Date().getFullYear()}
+        {'.'}
+      </Typography>
+      <Typography variant="body2" color="textSecondary" align="center">
+        {'Icons made by '}
+        <Link href="https://www.flaticon.com/authors/freepik" title="Freepik">
+          Freepik
+        </Link>{' from '}
+        <Link href="https://www.flaticon.com/" title="Flaticon">
+          www.flaticon.com
+        </Link>
+      </Typography>
+    </div>
   );
 }
 
