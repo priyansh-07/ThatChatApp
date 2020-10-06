@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 	content: {
 		height: '78vh',
+		[theme.breakpoints.down('sm')]: {
+			height: '67vh',
+		},
 		overflow: 'scroll',
 		marginTop: theme.spacing(2),
 		marginLeft: theme.spacing(2),
@@ -35,10 +38,14 @@ const useStyles = makeStyles((theme) => ({
 		right: 0,
 		left: 0,
 		marginRight: theme.spacing(2),
+		backgroundColor: '#303030',
 		[theme.breakpoints.up('sm')]: {
 			marginLeft: '240px',
 		},
-	}
+	},
+	messageContainer: {
+		display: 'flex',
+	},
   }));
 
 export default function ChatWindow(props) {
@@ -76,13 +83,23 @@ export default function ChatWindow(props) {
 
 	const messageComponents = messages.map((msg, index) => {
 		if (msg.sender === props.userId)
-			return <SentMessage sender={msg.sender} text={msg.text} key={index} textColor='#fff'/>
+			return (
+				<div className={classes.messageContainer} key={index}>
+					<SentMessage sender={msg.sender} text={msg.text} />
+					<br />
+				</div>
+			)
 		else
-			return <ReceivedMessage sender={msg.sender} text={msg.text} key={index} textColor='#00cfc1'/>
+			return (
+				<div key={index}>
+					<ReceivedMessage sender={msg.sender} text={msg.text} />
+					<br />
+				</div>
+			)
 	});
 	return (
 		<div>
-			<div className={classes.content}>
+			<div className={classes.content} id='message-container'>
 				{messageComponents}
 			</div>
 			<form onSubmit={handleSubmit} className={classes.messageInput}>
@@ -94,7 +111,7 @@ export default function ChatWindow(props) {
 						onChange={e => {
 							setInputMessage(e.target.value);
 						}}
-						startAdornment={<InputAdornment position="start"> {'>'} </InputAdornment>}
+						startAdornment={<InputAdornment position="start" style={{color: '#00cfc1'}} > {'>'} </InputAdornment>}
 						labelWidth={60}
 						autoComplete='off'
 					/>

@@ -168,7 +168,7 @@ function Home(props) {
       setDisplayName(fbauth.currentUser.displayName);
       setCurrentEmail(fbauth.currentUser.email);
     }
-  }, [fbauth.currentUser]);
+  }, []); //[fbauth.currentUser]
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
