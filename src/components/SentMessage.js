@@ -10,10 +10,10 @@ const useStyles = makeStyles( theme => ({
 		backgroundColor: theme.palette.primary.main,
 		borderRadius: '1em 1em 0 1em',
 		marginLeft: 'auto',
-		color: '#303030',
+		color: theme.palette.background.default,
 	},
 	title: {
-		color: '#303030'
+		color: theme.palette.background.default,
 	},
 }))
 

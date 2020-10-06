@@ -70,7 +70,7 @@ export default function SignIn(props) {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSignIn}>
+        <form className={classes.form} onSubmit={handleSignIn}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -79,10 +79,11 @@ export default function SignIn(props) {
             id="email"
             label="Email Address"
             name="email"
-            autoComplete="email"
-            autoFocus
+            autoComplete="off"
+            type="email"
             value={email}
             onChange={e => setEmail(e.target.value)}
+            autoFocus
           />
           <TextField
             variant="outlined"

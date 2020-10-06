@@ -9,8 +9,7 @@ export default class AuthContextProvider extends Component {
 
 		this.state = {
 			isAuthenticated: false,
-			userId: 'testUserId',
-			test: 'testxyz'
+			userId: '',
 		}
 
 		this.toggleAuth = this.toggleAuth.bind(this);

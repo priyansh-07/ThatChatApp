@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    // marginRight: theme.spacing(2),
     [theme.breakpoints.up('sm')]: {
       display: 'none',
     },
@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0),
   },
   menuIcon: {
-    color: '#fff',
+    color: theme.palette.background.paper,
   },
   drawerHeader: {
     padding: '2em',
@@ -89,20 +89,36 @@ const useStyles = makeStyles((theme) => ({
   },
   appBarTitle: {
     fontFamily: 'Poiret One, cursive',
-    color: '#fff',
+    color: theme.palette.background.paper,
     fontWeight: 'bolder',
     fontSize: '2em',
-  }
+  },
 }));
 
-const customUseStyles = makeStyles({
+const customUseStyles = makeStyles( theme => ({
   root: {
     justifyContent: 'space-between',
   },
-})
+  simpleMenuButton: {
+    color: theme.palette.background.paper,
+    paddingRight: 0,
+  },
+  accountCircleIcon: {
+    marginRight: '0.5em',
+    [theme.breakpoints.down('sm')]: {
+      marginRight: 0,
+    },
+  }
+}));
 
 function SimpleMenu(props) {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [deviceWidth, setDeviceWidth] = useState(null);
+  const simpleMenuClasses = customUseStyles();
+  
+  useEffect(() => {
+    setDeviceWidth(window.innerWidth);
+  }, [])
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -123,12 +139,12 @@ function SimpleMenu(props) {
       <Button
         variant='outlined'
         color='primary'
-        style={{ color: '#fff' }} 
+        className={simpleMenuClasses.simpleMenuButton}
         aria-controls="simple-menu"
         aria-haspopup="true"
         onClick={handleClick}>
-          <AccountCircleIcon style={{marginRight: '0.5em'}} />
-          {props.displayName}
+          <AccountCircleIcon className={simpleMenuClasses.accountCircleIcon} />
+          {deviceWidth < 600 ? null : props.displayName}
       </Button>
       <Menu
         id="simple-menu"
@@ -168,7 +184,7 @@ function Home(props) {
       setDisplayName(fbauth.currentUser.displayName);
       setCurrentEmail(fbauth.currentUser.email);
     }
-  }, []); //[fbauth.currentUser]
+  }, []);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -208,7 +224,7 @@ function Home(props) {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar className={customClasses.root}>
           <IconButton
-            color="inherit"
+            color='inherit'
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
