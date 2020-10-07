@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 	  flexWrap: 'wrap',
 	},
 	margin: {
-	  margin: theme.spacing(1),
+	  marginRight: '1.1em',
 	},
 	withoutLabel: {
 	  marginTop: theme.spacing(3),
@@ -22,28 +22,33 @@ const useStyles = makeStyles((theme) => ({
 	textField: {
 	  width: '25ch',
 	},
-	content: {
-		height: '78vh',
+	contentContainer: {
+		display: 'flex',
+		flexDirection: 'column',
+		maxHeight: '92vh',
 		[theme.breakpoints.down('sm')]: {
-			height: '67vh',
+			maxHeight: '93vh',
 		},
+		justifyContent: 'flex-end',
+		justifySelf: 'flex-end',
+		paddingBottom: '0.3em',
+		width: '100%',
+	},
+	content: {
+		maxHeight: 'auto',
 		overflow: 'scroll',
 		marginTop: theme.spacing(2),
 		marginLeft: theme.spacing(2),
 		marginBottom: theme.spacing(1),
 	},
 	messageInputForm: {
-		position: 'fixed',
-		bottom: 0,
-		right: 0,
-		left: 0,
-		marginRight: theme.spacing(2),
-		[theme.breakpoints.up('sm')]: {
-			marginLeft: '240px',
-		},
-	},
-	messageContainer: {
-		display: 'flex',
+		alignSelf: 'flex-end',
+		width: '98%',
+		[theme.breakpoints.down('sm')]: {
+			width: '96%',
+		},		
+		margin: 'auto',
+		marginTop: '0.4em',
 	},
 	outlinedInput: {
 		backgroundColor: theme.palette.background.default,
@@ -85,13 +90,12 @@ export default function ChatWindow(props) {
 	}
 
 	const messageComponents = (
-		<div>
+		<div style={{display: 'flex', flexDirection: 'column'}}>
 			{messages.map((msg, index) => {
 				if (msg.sender === props.userId)
 					return (
 						<div className={classes.messageContainer} key={index}>
 							<SentMessage sender={msg.sender} text={msg.text} />
-							<br />
 						</div>
 					)
 				else
@@ -107,7 +111,12 @@ export default function ChatWindow(props) {
 	)
 
 	return (
-		<div>
+		<div style={{
+				display: 'flex',
+				flexDirection: 'row',
+				alignItems: 'flex-end',
+			}}>
+		<div className={classes.contentContainer}>
 			<div className={classes.content}>
 				{messageComponents}
 			</div>
@@ -127,6 +136,7 @@ export default function ChatWindow(props) {
 					/>
 				</FormControl>
 			</form>
+		</div>
 		</div>
 	)
 }
