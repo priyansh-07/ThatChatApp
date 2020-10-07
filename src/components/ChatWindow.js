@@ -25,11 +25,11 @@ const useStyles = makeStyles((theme) => ({
 	contentContainer: {
 		display: 'flex',
 		flexDirection: 'column',
-		maxHeight: '92vh',
+		height: '92vh',
 		[theme.breakpoints.down('sm')]: {
-			maxHeight: '93vh',
+			height: '93vh',
 		},
-		justifyContent: 'flex-end',
+		justifyContent: 'space-between',
 		justifySelf: 'flex-end',
 		paddingBottom: '0.3em',
 		width: '100%',
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 		[theme.breakpoints.down('sm')]: {
 			width: '96%',
 		},		
-		margin: 'auto',
+		margin: '0.5em',
 		marginTop: '0.4em',
 	},
 	outlinedInput: {
